@@ -1,1 +1,495 @@
-Test2
+<!DOCTYPE html>
+<html ><head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta property="og:site_name" content="Identifying Spurious Correlations using Counterfactual Alignment" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="article" />
+	<meta property="og:image" content="https://josephpcohen.com/latentshift/latentshift_files/gif-alignment-plot-faces-h.png" />
+	<meta property="og:description" content="We propose the counterfactual alignment method to detect and explore spurious correlations of black box classifiers." />
+  
+<meta name="twitter:title" content="Identifying Spurious Correlations using Counterfactual Alignment" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://josephpcohen.com/latentshift/latentshift_files/gif-alignment-plot-faces-h.png" />
+<meta name="twitter:description" content="We propose the counterfactual alignment method to detect and explore spurious correlations of black box classifiers." />
+
+  
+  
+  
+  <meta name="description" content="We propose the counterfactual alignment method to detect and explore spurious correlations of black box classifiers.">
+  <meta name="keywords" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Identifying Spurious Correlations using Counterfactual Alignment</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="./latentshift_files/bulma.min.css">
+
+  <link rel="stylesheet" href="./latentshift_files/fontawesome.all.min.css">
+  <link rel="stylesheet" href="./latentshift_files/academicons.min.css">
+  <link rel="stylesheet" href="./latentshift_files/index.css">
+
+
+  <script defer="" src="./latentshift_files/fontawesome.all.min.js"></script>
+
+
+<script>
+	
+
+function showdiff(){
+	
+	$('.cf').each(function(i, item){
+		if (item.src.includes('heatmap.png')){
+			item.src = item.src.replace('heatmap.png','0.png')
+		}else{
+			item.src = item.src.replace('0.png','heatmap.png')
+		}
+	})
+	
+	
+}
+
+</script>
+
+</head>
+<body>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Identifying Spurious Correlations using Counterfactual Alignment</h1>
+          <h1 style="font-size:1.5rem">A Conference Name<br></h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=slS0dvUAAAAJ">Joseph Paul Cohen</a><sup></sup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=Rsz3iJAAAAAJ">Louis Blankemeier</a><sup></sup></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=08Y4NhMAAAAJ">Akshay Chaudhari</a><sup></sup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Stanford University</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <a href="https://www.stanford.edu"><img style="width:15%; padding-right: 15px;" src="./latentshift_files/stanford-logo2.png"> </a>
+          </div>
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <svg class="svg-inline--fa fa-file-pdf fa-w-12" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="file-pdf" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M181.9 256.1c-5-16-4.9-46.9-2-46.9 8.4 0 7.6 36.9 2 46.9zm-1.7 47.2c-7.7 20.2-17.3 43.3-28.4 62.7 18.3-7 39-17.2 62.9-21.9-12.7-9.6-24.9-23.4-34.5-40.8zM86.1 428.1c0 .8 13.2-5.4 34.9-40.2-6.7 6.3-29.1 24.5-34.9 40.2zM248 160h136v328c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V24C0 10.7 10.7 0 24 0h200v136c0 13.2 10.8 24 24 24zm-8 171.8c-20-12.2-33.3-29-42.7-53.8 4.5-18.5 11.6-46.6 6.2-64.2-4.7-29.4-42.4-26.5-47.8-6.8-5 18.3-.4 44.1 8.1 77-11.6 27.6-28.7 64.6-40.8 85.8-.1 0-.1.1-.2.1-27.1 13.9-73.6 44.5-54.5 68 5.6 6.9 16 10 21.5 10 17.9 0 35.7-18 61.1-61.8 25.8-8.5 54.1-19.1 79-23.2 21.7 11.8 47.1 19.5 64 19.5 29.2 0 31.2-32 19.7-43.4-13.9-13.6-54.3-9.7-73.6-7.2zM377 105L279 7c-4.5-4.5-10.6-7-17-7h-6v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-74.1 255.3c4.1-2.7-2.5-11.9-42.8-9 37.1 15.8 42.8 9 42.8 9z"></path></svg><!-- <i class="fas fa-file-pdf"></i> Font Awesome fontawesome.com -->
+                  </span>
+                  <span>Paper </span>
+                </a>
+              </span>
+			  <br>
+              <span class="link-block">
+                <a href="https://github.com/ieee8023/latentshift" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <svg class="svg-inline--fa fa-github fa-w-16" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="github" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" data-fa-i2svg=""><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg><!-- <i class="fab fa-github"></i> Font Awesome fontawesome.com -->
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="hero is-light is-small">
+  <div class="hero-body" >
+    <div class="container">
+
+
+<table style="width:100%;text-align: center;">
+	<tr>
+		<th>Classifier</th>
+		<th>Classifier Input (x<sub>0</sub>)</th>
+		<th>Counterfactual (x<sub>-λ</sub>) <Br><button onclick="showdiff();">show diff</button></th>
+		<th>Video</th>
+		<th>Alignment Plot</th>
+	</tr>
+	<tr>
+		<td>smiling</td>
+		<td style="width:20%;vertical-align: middle;">
+			<img style="width:100%;" class="featurette-image img-responsive center-block" src="outputs_face/smiling_26187/9.png">
+		</td>
+
+		<td style="width:20%">
+			<img class="cf" style="width:100%;" class="featurette-image img-responsive center-block" src="outputs_face/smiling_26187/0.png">
+		</td>
+		<td style="width:20%">
+          <video autoplay controls muted loop width="100%">
+            <source src="outputs_face/smiling_26187/video.mp4" type="video/mp4">
+          </video>
+		</td>
+		<td style="width:25%">
+			<img class="featurette-image img-responsive center-block" src="outputs_face/smiling_26187/alignment.png">
+		</td>
+	</tr>
+	<tr>
+		<td>smiling (biased by arched_eyebrows) <br><img src="latentshift_files/BIAS-DETECTED.png"/></td>
+		<td style="width:20%;vertical-align: middle;">
+			<img style="width:100%;" class="featurette-image img-responsive center-block" src="outputs_face/smiling_26187/9.png">
+		</td>
+		<td style="width:20%">
+			<img class="cf" style="width:100%;" class="featurette-image img-responsive center-block" src="outputs_face/smiling+0.3arched_eyebrows_26187/0.png">
+		</td>
+		<td style="width:20%">
+          <video autoplay controls muted loop width="100%">
+            <source src="outputs_face/smiling+0.3arched_eyebrows_26187/video.mp4" type="video/mp4">
+          </video>
+		</td>
+		<td style="width:25%">
+			<img class="featurette-image img-responsive center-block" src="outputs_face/smiling+0.3arched_eyebrows_26187/alignment.png">
+		</td>
+	</tr>
+</table>
+
+<center>
+	<div class="column is-four-fifths">
+<p>
+Examples showing the CF alignment of face classifiers with one that one is biased by arched_eyebrows. 
+This is illistrated visually as well as in the alignment plots where arched_eyebrows is observed aligned with smiling.
+</p>
+</div>
+</center>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+Models driven by spurious correlations often yield poor generalization performance.
+We propose the counterfactual alignment method to detect and explore spurious correlations of black box classifiers.
+Counterfactual images generated with respect to one classifier can be input into other classifiers to
+see if they also induce changes in the outputs of these classifiers. The relationship between these responses
+can be quantified and used to identify specific instances where a spurious correlation exists as well as compute
+aggregate statistics over a dataset. Our work demonstrates the ability to detect spurious correlations in face
+attribute classifiers. This is validated by observing intuitive trends in a face attribute classifier as well as
+fabricating spurious correlations and detecting their presence, both visually and quantitatively.
+Further, utilizing the CF alignment method, we demonstrate that we can rectify spurious correlations identified in
+classifiers.
+          </p>
+        </div>
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-two-fifths">
+            <h2 class="title is-3">Video</h2>
+            <div class="publication-video">
+              TODO
+			</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+	    <h2 class="title is-3">Counterfactual Alignment</h2>
+	    <div class="content has-text-justified">
+	      <p>
+			  
+Overview of the alignment CF alignment methodology. An image is encoded, reconstructed, and then processed by a classifier. The
+counterfactual is generated by subtracting the gradient of the classifier output w.r.t. the latent representation. The
+resulting representation is reconstructed back into an image. The reconstructed images are processed with multiple
+classifiers and the classifier outputs can be plotted side by side to study their alignment. The base model value can be
+used as the x-axis to more easily compare it to the predictions of another classifier. The output changes can be
+quantified and compared using relative change.
+	      </p>
+	    </div>
+	 </div>
+  </div>
+  	<img style="width:100%" src="latentshift_files/gif-alignment-plot-faces-h.png" />
+  </div>
+</section>
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+	    <h2 class="title is-3">Dataset level CF alignment</h2>
+	    <div class="content has-text-justified">
+	      
+<center>
+<p>
+Relationships between face attribute classifiers as measured by CF-induced relative changes (left), classifier predictions (middle)
+and training data labels (right). In (a), base classifiers are along the rows and downstream classifiers are along the columns. Comparing
+(a) to (b) and (c), shows that many relationships reflected in the CF outputs are preserved from correlations in the training data. The
+non-symmetric relationship between male and wearing lipstick, highlighted in green, reflects expected interactions between the two face
+attribute classifiers. The relationship between male and big nose, highlighted in red, is strong in both the classifier predictions and ground
+truth labels but low in CF alignment, indicating that although correlated, these features aren’t exploited by the classifier.
+</p>
+</center>
+
+	    </div>
+	 </div>
+  </div>
+  
+  <p>
+<img style="width:100%;" src="latentshift_files/face_alignment_subset.png" />
+</p>
+  </div>
+</section>
+
+
+
+
+<section class="hero is-light is-small">
+  <div class="hero-body" >
+    <div class="container">
+<h2 class="title is-3">More Examples</h2>
+
+<table style="width:100%;text-align: center;">
+	<tr>
+		<th>Classifier</th>
+		<th>Classifier Input (x<sub>0</sub>)</th>
+		<th>Counterfactual (x<sub>-λ</sub>) <Br><button onclick="showdiff();">show diff</button></th>
+		<th>Video</th>
+		<th>Alignment Plot</th>
+	</tr>
+	<tr>
+		<td>pointy_nose</td>
+		<td style="width:20%;vertical-align: middle;">
+			<img style="width:100%;" class="featurette-image img-responsive center-block" src="outputs_face/pointy_nose_18397/9.png">
+		</td>
+
+		<td style="width:20%">
+			<img class="cf" style="width:100%;" class="featurette-image img-responsive center-block" src="outputs_face/pointy_nose_18397/0.png">
+		</td>
+		<td style="width:20%">
+          <video autoplay controls muted loop width="100%">
+            <source src="outputs_face/pointy_nose_18397/video.mp4" type="video/mp4">
+          </video>
+		</td>
+		<td style="width:25%">
+			<img class="featurette-image img-responsive center-block" src="outputs_face/pointy_nose_18397/alignment.png">
+		</td>
+	</tr>
+	<tr>
+		<td>heavy_makeup</td>
+		<td style="width:20%;vertical-align: middle;">
+			<img style="width:100%;" class="featurette-image img-responsive center-block" src="outputs_face/heavy_makeup_18397/9.png">
+		</td>
+
+		<td style="width:20%">
+			<img class="cf" style="width:100%;" class="featurette-image img-responsive center-block" src="outputs_face/heavy_makeup_18397/0.png">
+		</td>
+		<td style="width:20%">
+          <video autoplay controls muted loop width="100%">
+            <source src="outputs_face/heavy_makeup_18397/video.mp4" type="video/mp4">
+          </video>
+		</td>
+		<td style="width:25%">
+			<img class="featurette-image img-responsive center-block" src="outputs_face/heavy_makeup_18397/alignment.png">
+		</td>
+	</tr>
+	<tr>
+		<td>attractive</td>
+		<td style="width:20%;vertical-align: middle;">
+			<img style="width:100%;" class="featurette-image img-responsive center-block" src="outputs_face/attractive_18397/9.png">
+		</td>
+
+		<td style="width:20%">
+			<img class="cf" style="width:100%;" class="featurette-image img-responsive center-block" src="outputs_face/attractive_18397/0.png">
+		</td>
+		<td style="width:20%">
+          <video autoplay controls muted loop width="100%">
+            <source src="outputs_face/attractive_18397/video.mp4" type="video/mp4">
+          </video>
+		</td>
+		<td style="width:25%">
+			<img class="featurette-image img-responsive center-block" src="outputs_face/attractive_18397/alignment.png">
+		</td>
+	</tr>
+</table>
+<center>
+<div class="column is-four-fifths">
+<p>
+Examples showing the CF alignment of face classifiers. 
+The relative change with respect to the base classifier is shown next to the name of the classifier in the legend.
+</p>
+</div>
+</center>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+	    <h2 class="title is-3">Rectifying classifiers</h2>
+	    <div class="content has-text-justified">
+	      <p>
+			  <table>
+				  <td style="width:40%;padding-top: 100pt;">
+Counterfactual alignment matrices showing the relative change before and after optimization to remove the bias for <em>big_nose</em> on a hold out
+test set. The figure shows a dramatic reduction in relative change for most classifiers and <em>big_nose</em> with limited
+residual impact on other relationships.
+				  </td>
+				  <td style="width:40%"><img style="width:100%" src="latentshift_files/rectify_training_matrix.png" /></td>
+			  </table>
+	      </p>
+	    </div>	    
+	 </div>
+  </div>
+  
+<table style="width:100%;text-align: center;">
+	<tr>
+		<th>Classifier</th>
+		<th>Classifier Input (x<sub>0</sub>)</th>
+		<th>Counterfactual (x<sub>-λ</sub>) <Br><button onclick="showdiff();">show diff</button></th>
+		<th>Video</th>
+		<th>Alignment Plot</th>
+	</tr>
+	<tr>
+		<td>heavy_makeup</td>
+		<td style="width:20%;vertical-align: middle;">
+			<img style="width:100%;" class="featurette-image img-responsive center-block" src="outputs_face/heavy_makeup_18397/9.png">
+		</td>
+
+		<td style="width:20%">
+			<img class="cf" style="width:100%;" class="featurette-image img-responsive center-block" src="outputs_face/heavy_makeup_18397/0.png">
+		</td>
+		<td style="width:20%">
+          <video autoplay controls muted loop width="100%">
+            <source src="outputs_face/heavy_makeup_18397/video.mp4" type="video/mp4">
+          </video>
+		</td>
+		<td style="width:25%">
+			<img class="featurette-image img-responsive center-block" src="outputs_face/heavy_makeup_18397/alignment.png">
+		</td>
+	</tr>
+	<tr>
+		<td>heavy_makeup-0.02big_lips <br><img src="latentshift_files/BIAS-MITIGATED.png"/></td>
+		<td style="width:20%;vertical-align: middle;">
+			<img style="width:100%;" class="featurette-image img-responsive center-block" src="outputs_face/heavy_makeup-0.02big_lips_18397/9.png">
+		</td>
+
+		<td style="width:20%">
+			<img class="cf" style="width:100%;" class="featurette-image img-responsive center-block" src="outputs_face/heavy_makeup-0.02big_lips_18397/0.png">
+		</td>
+		<td style="width:20%">
+          <video autoplay controls muted loop width="100%">
+            <source src="outputs_face/heavy_makeup-0.02big_lips_18397/video.mp4" type="video/mp4">
+          </video>
+		</td>
+		<td style="width:25%">
+			<img class="featurette-image img-responsive center-block" src="outputs_face/heavy_makeup-0.02big_lips_18397/alignment.png">
+		</td>
+	</tr>
+</table>
+
+<center>
+<p>An example of a big lips spurious correlation being corrected for the heavy makeup classifier. The lip size remains the same as the makeup is removed.</p>
+</center>
+  
+  
+  </div>
+</section>
+
+
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@Article{cohen2024cfalignment,
+      author       = {Cohen, Joseph Paul and Blankemeier, Louis and Chaudhari, Akshay},
+      title        = {Identifying Spurious Correlations using Counterfactual Alignment},
+      year         = {2024},
+      url          = {}
+}</code></pre>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+      <h2 class="title is-3">Acknowledgments</h2>
+      <p>
+		  We would like to thank Stanford University and the Stanford Research Computing Center for providing computational resources and support that contributed to these research results.
+	   </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">References</h2>
+
+        <div class="content has-text-justified">
+          <p>
+			Cohen, J. P., Brooks, R., En, S., Zucker, E., Pareek, A., Lungren, M. P., & Chaudhari, A. (2021). Gifsplanation via Latent Shift: A Simple Autoencoder Approach to Counterfactual Generation for Chest X-rays. Medical Imaging with Deep Learning. https://openreview.net/forum?id=rnunjvgxAMt
+          </p>
+
+        </div>
+      </div>
+    </div>
+    <!--/ Concurrent Work. -->
+  </div>
+</section>
+
+
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link" href="">
+        <svg style="width: 0.75em;" class="fa-file-pdf fa-w-12" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="file-pdf" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M181.9 256.1c-5-16-4.9-46.9-2-46.9 8.4 0 7.6 36.9 2 46.9zm-1.7 47.2c-7.7 20.2-17.3 43.3-28.4 62.7 18.3-7 39-17.2 62.9-21.9-12.7-9.6-24.9-23.4-34.5-40.8zM86.1 428.1c0 .8 13.2-5.4 34.9-40.2-6.7 6.3-29.1 24.5-34.9 40.2zM248 160h136v328c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V24C0 10.7 10.7 0 24 0h200v136c0 13.2 10.8 24 24 24zm-8 171.8c-20-12.2-33.3-29-42.7-53.8 4.5-18.5 11.6-46.6 6.2-64.2-4.7-29.4-42.4-26.5-47.8-6.8-5 18.3-.4 44.1 8.1 77-11.6 27.6-28.7 64.6-40.8 85.8-.1 0-.1.1-.2.1-27.1 13.9-73.6 44.5-54.5 68 5.6 6.9 16 10 21.5 10 17.9 0 35.7-18 61.1-61.8 25.8-8.5 54.1-19.1 79-23.2 21.7 11.8 47.1 19.5 64 19.5 29.2 0 31.2-32 19.7-43.4-13.9-13.6-54.3-9.7-73.6-7.2zM377 105L279 7c-4.5-4.5-10.6-7-17-7h-6v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-74.1 255.3c4.1-2.7-2.5-11.9-42.8-9 37.1 15.8 42.8 9 42.8 9z"></path></svg><!-- <i class="fas fa-file-pdf"></i> Font Awesome fontawesome.com -->
+      </a>
+      <a class="icon-link" href="https://github.com/ieee8023/latentshift" disabled="">
+        <svg style="width: 0.75em;" class="fa-github fa-w-16" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="github" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" data-fa-i2svg=""><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg><!-- <i class="fab fa-github"></i> Font Awesome fontawesome.com -->
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script src="./latentshift_files/script.js"></script>
+
+
+
+<div></div></body></html>
