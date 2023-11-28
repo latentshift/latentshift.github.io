@@ -129,8 +129,8 @@ function showdiff(){
 		<th>Classifier</th>
 		<th>Classifier Input (x<sub>0</sub>)</th>
 		<th>Counterfactual (x<sub>-λ</sub>) <Br><button onclick="showdiff();">show diff</button></th>
-		<th>Video</th>
-		<th>Alignment Plot</th>
+		<th>Counterfactual Video</th>
+		<th>Counterfactual Alignment Plot</th>
 	</tr>
 	<tr>
 		<td>smiling</td>
@@ -282,63 +282,63 @@ truth labels but low in CF alignment, indicating that although correlated, these
 <table style="width:100%;text-align: center;">
 	<tr>
 		<th>Classifier</th>
-		<th>Classifier Input (x<sub>0</sub>)</th>
-		<th>Counterfactual (x<sub>-λ</sub>) <Br><button onclick="showdiff();">show diff</button></th>
-		<th>Video</th>
-		<th>Alignment Plot</th>
+		<th style="width:18%;">Classifier Input (x<sub>0</sub>)</th>
+		<th style="width:18%;">Counterfactual (x<sub>-λ</sub>) <Br><button onclick="showdiff();">show diff</button></th>
+		<th style="width:18%;">Counterfactual Video</th style="width:20%;">
+		<th style="width:40%;">Counterfactual Alignment Plot</th>
 	</tr>
 	<tr>
 		<td>pointy_nose</td>
-		<td style="width:20%;vertical-align: middle;">
+		<td style="vertical-align: middle;">
 			<img style="width:100%;" class="featurette-image img-responsive center-block" src="outputs_face/pointy_nose_18397/9.png">
 		</td>
 
-		<td style="width:20%">
+		<td>
 			<img class="cf" style="width:100%;" class="featurette-image img-responsive center-block" src="outputs_face/pointy_nose_18397/0.png">
 		</td>
-		<td style="width:20%">
+		<td>
           <video autoplay controls muted loop width="100%">
             <source src="outputs_face/pointy_nose_18397/video.mp4" type="video/mp4">
           </video>
 		</td>
-		<td style="width:25%">
-			<img class="featurette-image img-responsive center-block" src="outputs_face/pointy_nose_18397/alignment.png">
-		</td>
-	</tr>
-	<tr>
-		<td>heavy_makeup</td>
-		<td style="width:20%;vertical-align: middle;">
-			<img style="width:100%;" class="featurette-image img-responsive center-block" src="outputs_face/heavy_makeup_18397/9.png">
-		</td>
-
-		<td style="width:20%">
-			<img class="cf" style="width:100%;" class="featurette-image img-responsive center-block" src="outputs_face/heavy_makeup_18397/0.png">
-		</td>
-		<td style="width:20%">
-          <video autoplay controls muted loop width="100%">
-            <source src="outputs_face/heavy_makeup_18397/video.mp4" type="video/mp4">
-          </video>
-		</td>
-		<td style="width:25%">
-			<img class="featurette-image img-responsive center-block" src="outputs_face/heavy_makeup_18397/alignment.png">
+		<td>
+			<img class="featurette-image img-responsive center-block" src="outputs_face/pointy_nose_18397/split_alignment.png">
 		</td>
 	</tr>
 	<tr>
 		<td>attractive</td>
-		<td style="width:20%;vertical-align: middle;">
+		<td style="vertical-align: middle;">
 			<img style="width:100%;" class="featurette-image img-responsive center-block" src="outputs_face/attractive_18397/9.png">
 		</td>
 
-		<td style="width:20%">
+		<td>
 			<img class="cf" style="width:100%;" class="featurette-image img-responsive center-block" src="outputs_face/attractive_18397/0.png">
 		</td>
-		<td style="width:20%">
+		<td>
           <video autoplay controls muted loop width="100%">
             <source src="outputs_face/attractive_18397/video.mp4" type="video/mp4">
           </video>
 		</td>
-		<td style="width:25%">
-			<img class="featurette-image img-responsive center-block" src="outputs_face/attractive_18397/alignment.png">
+		<td>
+			<img class="featurette-image img-responsive center-block" src="outputs_face/attractive_18397/split_alignment.png">
+		</td>
+	</tr>
+	<tr>
+		<td>big_lips</td>
+		<td style="vertical-align: middle;">
+			<img style="width:100%;" class="featurette-image img-responsive center-block" src="outputs_face/big_lips_18397/9.png">
+		</td>
+
+		<td>
+			<img class="cf" style="width:100%;" class="featurette-image img-responsive center-block" src="outputs_face/big_lips_18397/0.png">
+		</td>
+		<td>
+          <video autoplay controls muted loop width="100%">
+            <source src="outputs_face/big_lips_18397/video.mp4" type="video/mp4">
+          </video>
+		</td>
+		<td>
+			<img class="featurette-image img-responsive center-block" src="outputs_face/big_lips_18397/split_alignment.png">
 		</td>
 	</tr>
 </table>
