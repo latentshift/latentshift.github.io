@@ -346,7 +346,10 @@ The relative change with respect to the base classifier is shown next to the nam
 	      <p>
 			  <table>
 				  <td style="width:40%;padding-top: 100pt;">
-Counterfactual alignment matrices showing the relative change before and after optimization to remove the bias for <em>big_nose</em> on a hold out
+We can use CF alignment to fix model bias in classifiers by using the relative change between model predictions as a loss function that can be minimized.
+<br>
+<br>
+Here are counterfactual alignment matrices showing the relative change before and after optimization to remove the bias for <em>big_nose</em> on a hold out
 test set. The figure shows a dramatic reduction in relative change for most classifiers and <em>big_nose</em> with limited
 residual impact on other relationships.
 				  </td>
